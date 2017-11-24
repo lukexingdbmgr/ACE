@@ -8,7 +8,8 @@
 class Solution(object):
     def findLeaves_help(self, root, res):
         if root == None:
-            return
+            ## for empty ; h = 0
+            return 0
 
         h = max(self.findLeaves_help(root.left, res), self.findLeaves_help(root.right, res))
         if len(res) == h:
