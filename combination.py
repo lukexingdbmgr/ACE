@@ -1,7 +1,7 @@
 class Solution(object):
     def getFactor_help(self, n, factors, res):
         i = None
-        if factors == None:
+        if len(factors) == 0:
             i = 2
         else:
             i = factors[-1]
@@ -10,12 +10,12 @@ class Solution(object):
             if n % i == 0:
                 factors.append(i)
                 factors.append(n / i)
-                res.apeend(factors)
+                res.append(list(factors))
 
                 factors.pop()  ### pop n/i
-                self.getFactor(n / i, factors, res)
+                self.getFactor_help(n / i, factors, res)
                 factors.pop()  ## pop i
-
+            i += 1
     def getFactors(self, n):
         """
         :type n: int
