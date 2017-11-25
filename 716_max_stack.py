@@ -38,13 +38,18 @@ class MaxStack(object):
 
         if k == q_k:
             self.q.pop(-1)
+        return v
 
     def top(self):
         """
         :rtype: int
         """
-        (c, _) = self.dict.items()
-        return c
+
+        for c, t in self.dict.items():
+            return t
+
+            # (c, _) = self.dict.items()
+            # return c
 
     def peekMax(self):
         """
@@ -62,6 +67,8 @@ class MaxStack(object):
         q_k, q_v = self.q[-1]
         self.dict.pop(q_k)
         self.q.pop()
+        return q_v
+
 
 
 if __name__ == "__main__":
