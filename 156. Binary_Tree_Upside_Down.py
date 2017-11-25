@@ -25,3 +25,4 @@ class Solution(object):
             prev = cur
             cur = next
             lastRight = right
+        return prev
