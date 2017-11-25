@@ -1,3 +1,6 @@
+import time
+
+
 class LinkNode(object):
     def __init__(self, v):
         self.value = v
@@ -60,10 +63,20 @@ class LRUCache(object):
             res = e["value"]
             lnd = e["link"]
 
+            expired = e.get('expired', None)
+            if expired != None:
+                if expired < time.time() * 1000000:  ## if timeout, unlink and delete
+                    if self.tail == lnd:  ## adjust tail
+                        self.tail = lnd.prev
+                    self.d.pop(key, None)  ## dictionary remove this key
+                    t = lnd.unlink()
+                    del (t)
+                    return -1
+
             self.touch(lnd)
             return res
 
-    def put(self, key, value):
+    def put(self, key, value, ttl=None):
         """
         :type key: int
         :type value: int
@@ -76,7 +89,7 @@ class LRUCache(object):
         ## if the key already exist ; do not need to evict any elements
         if len(self.d) == self.cap and v == None:
             ### reach capacity
-
+            ## remove tail
             t = self.tail
             self.tail = t.prev
             t = t.unlink()
@@ -92,7 +105,13 @@ class LRUCache(object):
         else:
             new_node = LinkNode(key)
             self.touch(new_node)
+
+            expired = None
+            if ttl:
+                expired = time.time() * 1000000 + ttl
+
             self.d[key] = {
                 "value": value,
-                "link": new_node
+                "link": new_node,
+                "expired": expired if expired else None
             }
