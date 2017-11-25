@@ -13,7 +13,7 @@ class Solution(object):
         :rtype: TreeNode
         """
 
-        cur = prev = next = lastRight = lastRight = None
+        cur = prev = next = lastRight = None
 
         cur = root
         while (cur != None):
