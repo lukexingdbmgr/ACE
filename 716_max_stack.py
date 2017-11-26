@@ -1,7 +1,30 @@
 ## python throw exceptions
-
-
+import heapq
 from  collections import OrderedDict
+
+
+class maxHeap():
+    def __init__(self):
+        self.q = []
+
+    def put(self, elem):
+        key, value = elem
+        heapq.heappush(self.q, (key * -1, value))
+
+    def get(self):
+        if len(self.q) != 0:
+            heapq.heappop()
+
+    def remove(self, elem):
+        i = 0
+        for i in range(len(self.q)):
+            if self.q[i] == elem:
+                self.q.remove(elem)
+                break
+        heapq.heapify(self.q)
+
+    def getMax(self):
+        return self.q[0]
 
 
 class MaxStack(object):
@@ -11,7 +34,7 @@ class MaxStack(object):
         """
         self.dict = OrderedDict()
         self.k = 0
-        self.q = []
+        self.q = maxHeap()
 
     def push(self, x):
         """
@@ -20,24 +43,16 @@ class MaxStack(object):
         """
         self.k += 1
         self.dict[self.k] = x
-
-        if len(self.q) == 0:
-            ## value -> key
-            self.q.append((self.k, x))
-        else:
-            v, k = self.q[-1]
-            if x >= v:
-                self.q.append((self.k, x))
+        ## time complity log(n)
+        self.q.put((x, self.k))
 
     def pop(self):
         """
         :rtype: int
         """
         k, v = self.dict.popitem(last=True)
-        q_k, q_v = self.q[-1]
-
-        if k == q_k:
-            self.q.pop(-1)
+        e = (v, k)
+        self.q.remove(e)
         return v
 
     def top(self):
@@ -45,42 +60,33 @@ class MaxStack(object):
         :rtype: int
         """
 
-        for c, t in self.dict.items():
-            return t
-
-            # (c, _) = self.dict.items()
-            # return c
+        L = list(self.dict.items())
+        k, v = L[-1]
+        return v
 
     def peekMax(self):
         """
         :rtype: int
         """
-        if len(self.q) == 0:
-            return
-        q_k, q_v = self.q[-1]
-        return q_v
+        k, v = self.q.getMax()
+        return k * -1
 
+    ## need to track the new max
     def popMax(self):
         """
         :rtype: int
         """
-        q_k, q_v = self.q[-1]
-        self.dict.pop(q_k)
+        k, v = self.q.peekMax()
+        self.dict.pop(v)
         self.q.pop()
-        return q_v
-
-
+        return v
 
 if __name__ == "__main__":
-    d = OrderedDict()
-    d[1] = 10
-    d[2] = 11
-    d[3] = 15
-    t = d.popitem(last=True)
-    print("pop = ", t)
+    s = MaxStack()
+    s.push(5)
+    s.push(1)
+    s.push(-5)
 
-    (c, _) = d.items()
-
-    print(c)
-
-    print(d)
+    c = s.popMax()
+    c = s.peekMax()
+    c = s.top()
