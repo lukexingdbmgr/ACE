@@ -32,6 +32,10 @@ class Solution(object):
             else:
                 return False
 
+        ### if the n ==0; and len(f) != 0
+        if n == 0:
+            return True
+
         lastpos = -1
         for i in range(len(f)):
             if self.canplace(f, i):
