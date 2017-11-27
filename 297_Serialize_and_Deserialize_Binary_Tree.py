@@ -11,7 +11,7 @@ class Codec:
         if root == None:
             ans.append('#')
             return
-        ans.append(str(root->val))
+        ans.append(str(root.val))
         self.serialize_help(root.left, ans)
         self.serialize_help(root.right, ans)
 
@@ -25,13 +25,13 @@ class Codec:
         self.serialize_help(root, ans)
         return ','.join(ans)  ## array to string
 
-    def des_helper(self, d_i)
+    def des_helper(self, d_i):
         v = next(d_i)
         if v == '#':
             return None
         nnd = TreeNode(int(v))
-        nnd.left = self.des_helper(self, d_i)
-        nnd.right = self.des_helper(self, d_i)
+        nnd.left = self.des_helper(d_i)
+        nnd.right = self.des_helper(d_i)
 
         return nnd
 
