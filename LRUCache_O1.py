@@ -34,18 +34,24 @@ class LRUCache(object):
         self.d = {}
 
     def touch(self, lnd):
-        ## corner case: if there is only one element in the list
+        # 1 special position
+        ## 1.1 do not need to change; at the right place
+        ## 1.2 at the tail of the linked list; need to update the tail
+        #2 after insert at special position --> update the tail
         if lnd.prev != self.link_head:
             if self.tail == lnd:
                 self.tail = lnd.prev
             ## make sure it is unlinked
-            nd = lnd.unlink()
+            ####nd = lnd.unlink()
+            nd = lnd
+
             first = self.link_head.next
 
             self.link_head.next = nd
             nd.prev = self.link_head
             nd.next = first
 
+            ## sanity test for first;
             if first:
                 first.prev = nd
             else:
@@ -78,6 +84,14 @@ class LRUCache(object):
             self.touch(lnd)
             return res
 
+    def evict(self):
+        t = self.tail
+        self.tail = t.prev
+        t = t.unlink()
+        tail_key = t.value
+        self.d.pop(tail_key, None)
+        del (t)
+
     def put(self, key, value, ttl=None):
         """
         :type key: int
@@ -88,16 +102,9 @@ class LRUCache(object):
             raise "cap not is 0"
         v = self.d.get(key, None)
 
-        ## if the key already exist ; do not need to evict any elements
+        ## if reach
         if len(self.d) == self.cap and v == None:
-            ### reach capacity
-            ## remove tail
-            t = self.tail
-            self.tail = t.prev
-            t = t.unlink()
-            tail_key = t.value
-            self.d.pop(tail_key, None)
-            del (t)
+            self.evict()
 
         if self.d.get(key, None) != None:
             e = self.d[key]
@@ -109,14 +116,17 @@ class LRUCache(object):
             self.touch(new_node)
 
             expired = None
-            if ttl:
-                expired = time.time() * 1000000 + ttl
-
             self.d[key] = {
                 "value": value,
-                "link": new_node,
-                "expired": expired if expired else None
+                "link": new_node
             }
+
+        ## handle the timeout for this key
+        hash_e = self.d[key]
+        if ttl:
+            expired = time.time() * 1000000 + ttl
+            hash_e["expired"] =  expired
+
 
 
 class Node:
