@@ -17,7 +17,7 @@ def search(groups, nums):
     nums.append(v)
     return False
 
-
+'''
 def search(groups, nums):
     if not nums: return True
     v = nums.pop()
@@ -103,3 +103,5 @@ def search(groups, nums):
             return False
 
     groups[i] -= v
+
+'''
