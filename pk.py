@@ -1,6 +1,7 @@
 {1, 1, 1, 3}
 k = 2
 
+## check if the array can be separated into k equal groups
 
 def search(groups, nums):
     if not nums: return True
