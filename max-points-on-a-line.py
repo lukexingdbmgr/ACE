@@ -50,6 +50,7 @@ class Solution(object):
                 s = self.getSlop(x, y, x1, y1)
                 dd[s].append(k1)
 
+            sub = 0
             for key in dd:
                 l = dd[key]
                 print(l)
@@ -63,10 +64,12 @@ class Solution(object):
             else:
                 m = max(m, num_dict[k])
 
+
         return m
 
 
 if __name__ == "__main__":
     c = Point(0, 0)
     s = Solution()
+    ## [[84,250],[0,0],[1,0],[0,-70],[0,-70],[1,-1],[21,10],[42,90],[-42,-230]]
     print(s.maxPoints([Point(0, 0), Point(1, 1), Point(0, 0)]))
