@@ -73,3 +73,45 @@ if __name__ == "__main__":
     s = Solution()
     ## [[84,250],[0,0],[1,0],[0,-70],[0,-70],[1,-1],[21,10],[42,90],[-42,-230]]
     print(s.maxPoints([Point(0, 0), Point(1, 1), Point(0, 0)]))
+
+'''
+# Definition for a point.
+# class Point(object):
+#     def __init__(self, a=0, b=0):
+#         self.x = a
+#         self.y = b
+
+import numpy as np
+
+class Solution:
+    # @param points, a list of Points
+    # @return an integer
+    def maxPoints(self, points):
+        """
+        :type points: List[Point]
+        :rtype: int
+        """
+        if len(points) == 0:
+            return 0
+        mm = {}
+        for p in points:
+            mm[(p.x,p.y)] = mm.get((p.x,p.y), 0) + 1
+        P = mm.keys()    
+        if len(P) == 1:
+            return mm[P[0]]
+        maxP = 0
+        for i in xrange(len(P)-1):
+            slopes,repCnt = {},1
+            for j in xrange(i+1,len(P)):
+                dx,dy = P[i][0]-P[j][0],P[i][1]-P[j][1]
+                if dx == 0:
+                    slope = "#"
+                elif dy == 0:
+                    slope = 0
+                else:
+                    slope = float(dy) / dx
+                slopes[slope] = slopes.get(slope,0) + mm[P[j]]
+            maxP = max(maxP, mm[P[i]] + max(slopes.values()))
+        return maxP
+                
+'''
