@@ -23,6 +23,7 @@ class Point(object):
 #         self.x = a
 #         self.y = b
 
+# ACE #
 
 class Solution(object):
     def gcd(self, x, y):
@@ -44,14 +45,10 @@ class Solution(object):
         """
 
         num_dict = {}
-        key_tuple = {}
 
         for p in points:
             x, y = p.x, p.y
-            ##  key = hash((x, y)) % 90839 is not reliable
-            key = str(x) + "#" + str(y)  ## use string to give the unique k
-            key_tuple[key] = (x, y)
-            ## de-dup
+            key = (x, y)
             if key not in num_dict:
                 num_dict[key] = 1
             else:
@@ -64,23 +61,30 @@ class Solution(object):
         # print("-"*101)
         m = 0
         sub = 0
-        for k, (x, y) in key_tuple.items():
+        lst = list(num_dict.keys())  ##TypeError: 'dict_keys' object does not support indexing
+        if len(lst) == 1:
+            return num_dict[lst[0]]
+
+        ## lst = [(1,2), (4,5), (10,1)]
+        for i in range(len(lst) - 1):
             dd = {}
-            for k1, (x1, y1) in key_tuple.items():
-                if k == k1:
-                    continue
+            for j in range(i + 1, len(lst)):
+
+                x, y = lst[i]
+                x1, y1 = lst[j]
+
                 s = self.getSlop(x, y, x1, y1)
                 if s not in dd:
-                    dd[s] = num_dict[k1]
+                    dd[s] = num_dict[lst[j]]
                 else:
-                    dd[s] += num_dict[k1]
+                    dd[s] += num_dict[lst[j]]
 
             vs = dd.values()
             if vs:
                 mx = max(vs)
-                m = max(m, mx + num_dict[k])
+                m = max(m, mx + num_dict[lst[i]])
             else:
-                m = max(m, num_dict[k])
+                m = max(m, num_dict[lst[i]])
 
         return m
 
@@ -88,8 +92,9 @@ class Solution(object):
 if __name__ == "__main__":
     c = Point(0, 0)
     s = Solution()
-    l = [[84, 250], [0, 0], [1, 0], [0, -70], [0, -70], [1, -1], [21, 10], [42, 90], [-42, -230]]
+    # l = [[84, 250], [0, 0], [1, 0], [0, -70], [0, -70], [1, -1], [21, 10], [42, 90], [-42, -230]]
     # l = [[1,1],[1,1],[1,0],[1,0], [1,-1], [1, -1]]
+    l = [[0, 0]]
     fl = []
     for c in l:
         p = Point(c[0], c[1])
