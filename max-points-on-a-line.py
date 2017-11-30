@@ -31,7 +31,7 @@ class Solution(object):
         for p in points:
             x, y = p.x, p.y
             ##  key = hash((x, y)) % 90839 is not reliable
-            key = str(x) + "^_^" + str(y)
+            key = str(x) + "^_^" + str(y) ## use string to give the unique k
             print(x, y)
             print(key)
             key_tuple[key] = (x, y)
@@ -71,8 +71,13 @@ class Solution(object):
 if __name__ == "__main__":
     c = Point(0, 0)
     s = Solution()
-    ## [[84,250],[0,0],[1,0],[0,-70],[0,-70],[1,-1],[21,10],[42,90],[-42,-230]]
-    print(s.maxPoints([Point(0, 0), Point(1, 1), Point(0, 0)]))
+    #l =  [[84,250],[0,0],[1,0],[0,-70],[0,-70],[1,-1],[21,10],[42,90],[-42,-230]]
+    l = [[1,1],[1,1],[1,0],[1,0], [1,-1], [1, -1]]
+    fl = []
+    for c in l:
+        p = Point(c[0], c[1])
+        fl.append(p)
+    print(s.maxPoints(fl))
 
 '''
 # Definition for a point.
@@ -111,6 +116,7 @@ class Solution:
                 else:
                     slope = float(dy) / dx
                 slopes[slope] = slopes.get(slope,0) + mm[P[j]]
+                
             maxP = max(maxP, mm[P[i]] + max(slopes.values()))
         return maxP
                 
