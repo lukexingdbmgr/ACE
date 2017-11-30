@@ -16,11 +16,15 @@ class Point(object):
 #     def __init__(self, a=0, b=0):
 #         self.x = a
 #         self.y = b
-from collections import defaultdict
+
+# Definition for a point.
+# class Point:
+#     def __init__(self, a=0, b=0):
+#         self.x = a
+#         self.y = b
 
 
 class Solution(object):
-    ## 2# avoid divide operations
     def gcd(self, x, y):
         return x if y == 0 else self.gcd(y, x % y)
 
@@ -30,7 +34,6 @@ class Solution(object):
         y = y - y1
         x = x - x1
         g = self.gcd(x, y)
-        ## 1# tuple can be hashed
         return (x / g, y / g)
         # return float((y - y1) / (x - x1))
 
@@ -48,7 +51,8 @@ class Solution(object):
             ##  key = hash((x, y)) % 90839 is not reliable
             key = str(x) + "#" + str(y)  ## use string to give the unique k
             key_tuple[key] = (x, y)
-            if num_dict.get(key, None) == None:
+            ## de-dup
+            if key not in num_dict:
                 num_dict[key] = 1
             else:
                 num_dict[key] += 1
@@ -61,30 +65,22 @@ class Solution(object):
         m = 0
         sub = 0
         for k, (x, y) in key_tuple.items():
-            dd = defaultdict(list)
+            dd = {}
             for k1, (x1, y1) in key_tuple.items():
                 if k == k1:
                     continue
                 s = self.getSlop(x, y, x1, y1)
-                dd[s].append(k1)
+                if s not in dd:
+                    dd[s] = num_dict[k1]
+                else:
+                    dd[s] += num_dict[k1]
 
-            sub = 0
-            for key in dd:
-                l = dd[key]
-                # print("k = ", key)
-                # print(l)
-                s = 0
-                for c in l:
-                    s += num_dict[c]
-                sub = max(sub, s)
-                # print("sub = ", sub)
-            # print("")
-            if sub > 0:
-                # print("1:", m, sub+ num_dict[k] )
-                m = max(m, sub + num_dict[k])
+            vs = dd.values()
+            if vs:
+                mx = max(vs)
+                m = max(m, mx + num_dict[k])
             else:
                 m = max(m, num_dict[k])
-                # print("2:", m, sub + num_dict[k])
 
         return m
 
