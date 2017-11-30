@@ -128,6 +128,10 @@ class LRUCache(object):
             hash_e["expired"] =  expired
 
 
+'''
+["LRUCache","put","put","put","put","get","get","get","get","put","get","get","get","get","get"]
+[[3],[1,1],[2,2],[3,3],[4,4],[4],[3],[2],[1],[5,5],[1],[2],[3],[4],[5]]
+'''
 
 class Node:
     def __init__(self, k, v):
