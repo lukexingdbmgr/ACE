@@ -1,3 +1,11 @@
+class Interval(object):
+    def __init__(self, s=0, e=0):
+        self.start = s
+        self.end = e
+
+
+
+
 class Solution(object):
     def merge(self, intervals):
         """
@@ -6,7 +14,8 @@ class Solution(object):
         """
         if not intervals:
             return []
-        sorted(intervals, key=lambda inter: inter.start)
+        ###sorted(intervals, key=lambda inter: inter.start)
+        intervals.sort(key=lambda x: x.start)
         ## trap ###
         prev = intervals.pop(0)
 
@@ -23,3 +32,8 @@ class Solution(object):
         res.append(prev)
 
         return res
+
+
+s = Solution()
+l = [Interval(1, 4), Interval(0, 0)]
+s.merge(l)
