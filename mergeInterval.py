@@ -4,7 +4,11 @@ class Interval(object):
         self.end = e
 
 
-
+# Definition for an interval.
+# class Interval(object):
+#     def __init__(self, s=0, e=0):
+#         self.start = s
+#         self.end = e
 
 class Solution(object):
     def merge(self, intervals):
@@ -26,7 +30,7 @@ class Solution(object):
                 res.append(prev)
                 prev = curr
             else:
-                prev = Interval(min(prev.start, curr.start), max(curr.end, prev.end))
+                prev = Interval(prev.start, max(curr.end, prev.end))
 
         res.append(prev)
 
