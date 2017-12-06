@@ -25,8 +25,7 @@ class Solution(object):
             if prev.end < curr.start:
                 res.append(prev)
                 prev = curr
-
-            if prev.end >= curr.start:
+            else:
                 prev = Interval(min(prev.start, curr.start), max(curr.end, prev.end))
 
         res.append(prev)
