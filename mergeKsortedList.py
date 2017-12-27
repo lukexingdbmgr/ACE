@@ -3,7 +3,9 @@
 #     def __init__(self, x):
 #         self.val = x
 #         self.next = None
-
+#   time complexity: N*lgM
+# N -> the elements in total;
+# M -> len(lists)
 
 class Solution(object):
     def mergeKLists(self, lists):
