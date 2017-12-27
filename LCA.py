@@ -11,6 +11,10 @@ class Node:
         self.right = None
 
 
+## base :
+
+## find a value with n1 in a BT
+
 # This function returns pointer to LCA of two given
 # values n1 and n2
 # This function assumes that n1 and n2 are present in
