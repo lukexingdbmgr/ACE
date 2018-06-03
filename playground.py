@@ -10,10 +10,39 @@ class key_value():
             return self.key < other.key
 
 
-back
-tracking
-template
-https: // discuss.leetcode.com / topic / 46161 / a - general - approach - to - backtracking - questions - in -java - subsets - permutations - combination - sum - palindrome - partitioning / 2
-orderedDict
-internal
-http: // chenjiee815.github.io / collectionsbiao - zhun - ku - yuan - ma - xue - xi.html
+import collections
+
+d = collections.defaultdict(list)
+
+d[0].append('1')
+d[0].append('12')
+d[0].append('134')
+
+import functools
+
+
+class sortedSubscriptions(object):
+    def __init__(self, current_assigns):
+        self.mp = current_assigns
+        self.lst = [1, 23, 4]
+
+    def compare(self, s1, s2):
+        ret = self.mp[s1] - self.mp[s2]
+        if ret == 0:
+            ret = 1 if s1 > s2 else -1
+        return ret
+
+    def sort(self, lst):
+        return sorted(lst, key=functools.cmp_to_key(self.compare))
+
+    def __iter__(self):
+        return self.lst.__iter__()
+
+
+current_assigns = {"s1": 1, "s2": -200}
+lst = ["s1", "s2"]
+
+c = sortedSubscriptions(current_assigns)
+
+for t in c:
+    print(t)

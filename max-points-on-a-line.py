@@ -89,17 +89,58 @@ class Solution(object):
         return m
 
 
+class TreeNode(object):
+    def __init__(self, x):
+        self.val = x
+        self.left = None
+        self.right = None
+
+
+class Solution9(object):
+
+    def isSameTree(self, s, t):
+        ## 0 0 case
+        if s == None and t == None:
+            return True
+        ## 0 1 and 1 0 case
+        if (s and not t) or (not s and t):
+            return False
+        if s.val != t.val:
+            return False
+        return self.isSameTree(s.left, t.left) and self.isSameTree(s.right, t.right)
+
+    def isSubtree(self, s, t):
+        """
+        :type s: TreeNode
+        :type t: TreeNode
+        :rtype: bool
+        """
+        if s == None:
+            return False
+        if self.isSameTree(s, t):
+            return True
+        return self.isSubtree(s.left, t) or self.isSubtree(s.right, t)
+
+
 if __name__ == "__main__":
-    c = Point(0, 0)
-    s = Solution()
-    # l = [[84, 250], [0, 0], [1, 0], [0, -70], [0, -70], [1, -1], [21, 10], [42, 90], [-42, -230]]
-    # l = [[1,1],[1,1],[1,0],[1,0], [1,-1], [1, -1]]
-    l = [[0, 0]]
-    fl = []
-    for c in l:
-        p = Point(c[0], c[1])
-        fl.append(p)
-    print(s.maxPoints(fl))
+    s = TreeNode(4)
+    s.left = TreeNode(1)
+    s.right = TreeNode(2)
+    s.right.left = TreeNode(0)
+
+    t = TreeNode(4)
+    t.left = TreeNode(1)
+    t.right = TreeNode(2)
+
+    a = 1
+    b = 1
+
+    print(not a or not b)
+    if (a != None) or (b != None):
+        print("shock")
+
+    s9 = Solution9()
+    print(s9.isSubtree(s, t))
 
 '''
 # Definition for a point.
