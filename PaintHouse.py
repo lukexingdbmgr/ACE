@@ -19,7 +19,7 @@ class Solution(object):
             for house i we try 3 possible paint solutios:
                 if we paint with color 0, 
                     then the last house can only have two options: color 1 and color 2
-                    so the overall solution is min((i-1, 1), (i-1, 2)
+                    so the overall solution is min((i-1, 1), (i-1, 2))
                     +
                     cost of house[i] with color k (old)
             '''

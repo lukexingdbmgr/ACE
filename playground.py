@@ -10,6 +10,21 @@ class key_value():
             return self.key < other.key
 
 
+
+
+if __name__ == "__main__":
+    try:
+        1/0
+    except:
+        print("something is wrong")
+
+    print("1111")
+
+
+
+
+'''
+
 back
 tracking
 template
@@ -17,3 +32,6 @@ https: // discuss.leetcode.com / topic / 46161 / a - general - approach - to - b
 orderedDict
 internal
 http: // chenjiee815.github.io / collectionsbiao - zhun - ku - yuan - ma - xue - xi.html
+
+
+'''

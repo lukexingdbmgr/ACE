@@ -26,3 +26,12 @@ class Solution(object):
 s = Solution()
 
 s.leastInterval(tasks=["A","A","A","B","B","B"], n=2)
+
+t =  20
+
+def test():
+    global t
+    t += 1
+    print(t)
+
+test()

@@ -20,6 +20,29 @@ class Solution(object):
         return res
 
 
+import heapq
+
+class min_heap_node:
+    def __init__(self, val):
+        self.val = val
+    def __le__(self, other):
+        return self.val[1] > other.val[1]
+
+
+d = {"a":10, "c": 100, "d":101}
+
+
+def topk(d, k):
+    min_heap = []
+    for key in d:
+        heapq.heappush(min_heap, (key, d[key]))
+        if len(min_heap) == k + 1:
+            heapq.heappop(min_heap)
+
+    return min_heap
+
+
+print(topk(d, 2))
 
 s = Solution()
 s.totalHammingDistance([4,14,2])
