@@ -39,7 +39,7 @@ class circularBuffer:
         self.dump()
 
 
-t = circularBuffer(3)
+t = circularBuffer(10)
 
 for c in range(1, 4):
     t.push_element(c)
@@ -49,3 +49,25 @@ t.push_element(7)
 t.pop_element()
 t.push_element(8)
 t.pop_element()
+
+
+
+
+class testclass():
+    @classmethod
+    def t1(cls, c):
+        print("t1")
+
+    def t2(self, c):
+        print("t2")
+
+
+testclass.t1(9)
+
+tt = testclass()
+
+tt.t1(2)
+
+import threading
+
+
